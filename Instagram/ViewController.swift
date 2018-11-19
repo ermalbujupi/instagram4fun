@@ -2,7 +2,7 @@
 //  ViewController.swift
 //  Instagram
 //
-//  Created by Ermal Buju on 19.11.18.
+//  Created by Ermal Bujupaj on 19.11.18.
 //  Copyright © 2018 Ermal Bujupaj. All rights reserved.
 //
 
