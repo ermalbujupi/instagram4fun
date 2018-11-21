@@ -8,6 +8,7 @@
 
 import UIKit
 import SnapKit
+import Firebase
 
 class ViewController: UIViewController {
 
@@ -61,7 +62,37 @@ class ViewController: UIViewController {
         signUpButton.backgroundColor = UIColor.rgb(red: 149, green: 204, blue: 244, alpha: 1)
         signUpButton.titleLabel?.font = UIFont.boldSystemFont(ofSize: 14)
         signUpButton.setTitleColor(.white, for: .normal)
+        signUpButton.addTarget(self, action: #selector(handleSignUp), for: .touchUpInside)
         stackView.addArrangedSubview(signUpButton)
+    }
+    
+    @objc private func handleSignUp() {
+
+        guard let email = emailTextField.text, let password = passwordTextField.text else {
+            var errorMessage = ""
+            
+            if let emailText = emailTextField.text, emailText.isEmpty {
+                errorMessage.append("Email is missing\n")
+            }
+            
+            if let passwordText = passwordTextField.text, passwordText.isEmpty {
+                errorMessage.append("Password is missing")
+            }
+            
+            let alert = UIAlertController(title: "Alert", message: errorMessage, preferredStyle: .alert)
+            self.present(alert, animated: true, completion: nil)
+            return
+        }
+
+        Auth.auth().createUser(withEmail: email, password: password) { (authResult, error) in
+            if let error = error {
+                print("Failed to create user", error)
+                return
+            }
+            
+            let user = authResult?.user
+            print("Successfully created user \(user?.uid)")
+        }
     }
     
     private func setupConstraints() {
@@ -74,11 +105,6 @@ class ViewController: UIViewController {
             make.top.equalTo(plusPhotoButton.snp.bottom).offset(20)
             make.leading.equalTo(view).offset(60)
             make.trailing.equalTo(view).offset(-60)
-            
-        }
-        
-        emailTextField.snp.makeConstraints{ make in
-            
         }
     }
 
