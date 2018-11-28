@@ -10,7 +10,7 @@ import UIKit
 import SnapKit
 import Firebase
 
-class ViewController: UIViewController {
+class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
 
     var plusPhotoButton: UIButton!
     var stackView: UIStackView!
@@ -29,6 +29,7 @@ class ViewController: UIViewController {
     private func setupView() {
         plusPhotoButton = UIButton()
         plusPhotoButton.setImage(UIImage(named: "plus_photo"), for: .normal)
+        plusPhotoButton.addTarget(self, action: #selector(addPhoto), for: .touchUpInside)
         view.addSubview(plusPhotoButton)
         
         stackView = UIStackView()
@@ -54,7 +55,6 @@ class ViewController: UIViewController {
         passwordTextField.backgroundColor = UIColor(white: 0, alpha: 0.03)
         passwordTextField.borderStyle = .roundedRect
         passwordTextField.isSecureTextEntry = true
-        passwordTextField.textContentType = UITextContentType.password
         stackView.addArrangedSubview(passwordTextField)
         
         signUpButton = UIButton()
@@ -66,19 +66,49 @@ class ViewController: UIViewController {
         stackView.addArrangedSubview(signUpButton)
     }
     
+    @objc private func addPhoto() {
+        let imagePickerController = UIImagePickerController()
+        imagePickerController.delegate = self
+        imagePickerController.allowsEditing = true
+        present(imagePickerController, animated: true, completion: nil)
+    }
+    
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+        
+        if let editedImage = info[UIImagePickerController.InfoKey.editedImage] as? UIImage {
+            plusPhotoButton.setImage(editedImage, for: .normal)
+        } else if let originalImage = info[UIImagePickerController.InfoKey.originalImage] as?  UIImage {
+            plusPhotoButton.setImage(originalImage.withRenderingMode(.alwaysOriginal), for: .normal)
+        }
+        
+        plusPhotoButton.layer.cornerRadius = plusPhotoButton.frame.width/2
+        plusPhotoButton.layer.masksToBounds = true
+        plusPhotoButton.layer.borderColor = UIColor.black.cgColor
+        plusPhotoButton.layer.borderWidth = 3
+        
+        dismiss(animated: true, completion: nil)
+    }
+    
     @objc private func handleSignUp() {
-
-        guard let email = emailTextField.text, let password = passwordTextField.text else {
-            var errorMessage = ""
-            
-            if let emailText = emailTextField.text, emailText.isEmpty {
-                errorMessage.append("Email is missing\n")
-            }
-            
-            if let passwordText = passwordTextField.text, passwordText.isEmpty {
-                errorMessage.append("Password is missing")
-            }
-            
+        
+        var errorMessage = ""
+        
+        guard let email = emailTextField.text, email.count > 0 else {
+            errorMessage.append("Email is missing\n")
+            return
+        }
+        
+        guard let username = nameTextField.text, username.count > 0 else {
+            errorMessage.append("Username is missing\n")
+            return
+        }
+        
+        guard let password = passwordTextField.text, password.count > 0 else {
+            errorMessage.append("Password is missing")
+            return
+        }
+        
+        if errorMessage.count > 0 {
             let alert = UIAlertController(title: "Alert", message: errorMessage, preferredStyle: .alert)
             self.present(alert, animated: true, completion: nil)
             return
@@ -90,14 +120,66 @@ class ViewController: UIViewController {
                 return
             }
             
+            guard let image = self.plusPhotoButton.imageView?.image else {
+                return
+            }
+            
+            guard let uploadData = image.jpegData(compressionQuality: 0.3) else {
+                return
+            }
+            
+            var profileImageUrl = ""
+            
+            let fileName = NSUUID().uuidString
+            
+            let store = Storage.storage()
+            
+            let storageRef = store.reference()
+            
+            let profilesRef = storageRef.child("profile_images")
+            
+//            let usersProfiles =
+            
+            let uploadTask = profilesRef.child(fileName).putData(uploadData, metadata: nil, completion: { (metadata, error) in
+                guard let metadata = metadata else {
+                    return
+                }
+                
+                let size = metadata.size
+                
+                profilesRef.downloadURL(completion: { (url, error) in
+                    guard let downloadUrl = url else {
+                        return
+                    }
+                    
+                    profileImageUrl = downloadUrl.absoluteString
+                })
+            })
+            
             let user = authResult?.user
-            print("Successfully created user \(user?.uid)")
+            
+            guard let uId = user?.uid else {
+                return
+            }
+            
+            let dictionaryValues = ["username": username, "profileImageUrl": profileImageUrl] as [String : Any]
+            let values = [user?.uid: dictionaryValues]
+
+            Database.database().reference().child("users").updateChildValues(values, withCompletionBlock: { (err, ref) in
+                if let error = err {
+                    print("Failed to save user info to DB:", error)
+                    return
+                }
+
+                print("Successfully saved data in db \(uId)")
+            })
         }
     }
     
     private func setupConstraints() {
         plusPhotoButton.snp.makeConstraints { make in
             make.centerX.equalTo(view.snp.centerX)
+            make.height.width.equalTo(140)
             make.top.equalTo(view).offset(60)
         }
         
