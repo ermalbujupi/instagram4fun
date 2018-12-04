@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		48F1E7194A15D0E559C96B7B /* Pods_Instagram.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 508778C6A315A53F4F1B6300 /* Pods_Instagram.framework */; };
+		984027E821AF443400FB1178 /* MainTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 984027E721AF443400FB1178 /* MainTabBarController.swift */; };
+		984027EA21AF457D00FB1178 /* UserProfileController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 984027E921AF457D00FB1178 /* UserProfileController.swift */; };
 		9850DBCA21A36C52001885CA /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9850DBC921A36C52001885CA /* Extensions.swift */; };
 		9881F1F021A34CED00DA2FAC /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9881F1EF21A34CED00DA2FAC /* AppDelegate.swift */; };
 		9881F1F221A34CED00DA2FAC /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9881F1F121A34CED00DA2FAC /* ViewController.swift */; };
@@ -39,6 +41,8 @@
 /* Begin PBXFileReference section */
 		146612FE6479894D30CCFEBF /* Pods-Instagram.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Instagram.release.xcconfig"; path = "Pods/Target Support Files/Pods-Instagram/Pods-Instagram.release.xcconfig"; sourceTree = "<group>"; };
 		508778C6A315A53F4F1B6300 /* Pods_Instagram.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Instagram.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		984027E721AF443400FB1178 /* MainTabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTabBarController.swift; sourceTree = "<group>"; };
+		984027E921AF457D00FB1178 /* UserProfileController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserProfileController.swift; sourceTree = "<group>"; };
 		9850DBC921A36C52001885CA /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 		9881F1EC21A34CED00DA2FAC /* Instagram.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Instagram.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		9881F1EF21A34CED00DA2FAC /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -126,6 +130,8 @@
 			children = (
 				9850DBC821A36C40001885CA /* Utils */,
 				9881F1EF21A34CED00DA2FAC /* AppDelegate.swift */,
+				984027E721AF443400FB1178 /* MainTabBarController.swift */,
+				984027E921AF457D00FB1178 /* UserProfileController.swift */,
 				9881F1F121A34CED00DA2FAC /* ViewController.swift */,
 				9881F1F621A34CEE00DA2FAC /* Assets.xcassets */,
 				9881F1F821A34CEE00DA2FAC /* LaunchScreen.storyboard */,
@@ -346,6 +352,8 @@
 			files = (
 				9881F1F221A34CED00DA2FAC /* ViewController.swift in Sources */,
 				9850DBCA21A36C52001885CA /* Extensions.swift in Sources */,
+				984027E821AF443400FB1178 /* MainTabBarController.swift in Sources */,
+				984027EA21AF457D00FB1178 /* UserProfileController.swift in Sources */,
 				9881F1F021A34CED00DA2FAC /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -524,7 +532,10 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				INFOPLIST_FILE = Instagram/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = ermalbujupaj.Instagram;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.2;
@@ -539,7 +550,10 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				INFOPLIST_FILE = Instagram/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = ermalbujupaj.Instagram;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.2;
@@ -554,7 +568,11 @@
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
 				INFOPLIST_FILE = InstagramTests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = ermalbujupaj.InstagramTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.2;
@@ -570,7 +588,11 @@
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
 				INFOPLIST_FILE = InstagramTests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = ermalbujupaj.InstagramTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.2;
@@ -585,7 +607,11 @@
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				INFOPLIST_FILE = InstagramUITests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = ermalbujupaj.InstagramUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.2;
@@ -600,7 +626,11 @@
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				INFOPLIST_FILE = InstagramUITests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = ermalbujupaj.InstagramUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.2;
